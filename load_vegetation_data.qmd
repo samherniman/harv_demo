@@ -1,0 +1,32 @@
+
+```{r}
+library(tidiverse)
+library(vroom)
+# pak::pak("NEONScience/NEON-geolocation/geoNEON")
+library(geoNEON)
+```
+
+
+```{r}
+woody_biomass_path <- "/run/media/simone/Extreme SSD/forest-inventory-demo/harv/vegetation_structure/filesToStack10098/stackedFiles/vst_apparentindividual.csv"
+woody_map_path <- "/run/media/simone/Extreme SSD/forest-inventory-demo/harv/vegetation_structure/filesToStack10098/stackedFiles/vst_mappingandtagging.csv"
+```
+
+```{r}
+map = vroom(woody_map_path)
+map
+```
+
+```{r}
+biomass <- vroom(woody_biomass_path) 
+```
+
+
+```{r}
+map_loc = getLocTOS(location, "vst_mappingandtagging")
+```
+
+
+```{r}
+bio_loc = getLocTOS(location, "vst_apparentindividual")
+```

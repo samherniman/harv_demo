@@ -1,0 +1,19 @@
+[project]
+authors = ["Simone Massaro <simone.massaro@mone27.net>"]
+channels = ["conda-forge"]
+name = "harv_demo"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+r-tidyverse = ">=2.0.0,<3"
+r-vroom = ">=1.6.5,<2"
+r-pak = ">=0.8.0.1,<0.9"
+gdal = ">=3.10.2,<4"
+r-terra = ">=1.8_29,<2"
+r-rcpp = ">=1.0.14,<2"
+r-plyr = ">=1.8.9,<2"
+r-codetools = ">=0.2_20,<0.3"
+compilers = ">=1.9.0,<2"

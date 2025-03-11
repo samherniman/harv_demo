@@ -38,3 +38,7 @@ vignettes/*.pdf
 .DS_Store
 
 data/
+
+# pixi environments
+.pixi
+*.egg-info
