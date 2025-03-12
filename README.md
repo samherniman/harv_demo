@@ -86,7 +86,7 @@ f <- function(x) {
   y[x > 20] <- 5
   return(y)
 }
-lidR::opt_chunk_size(ctg) <- 500
+lidR::opt_chunk_size(ctg) <- 5000
 ```
 
 ``` r
@@ -117,7 +117,7 @@ sf::st_write(ttops, fs::path(output_dir, "treetops", "treetops.fgb"), append = F
 ttops
 ```
 
-    Simple feature collection with 43170 features and 2 fields
+    Simple feature collection with 43169 features and 2 fields
     Geometry type: POINT
     Dimension:     XY
     Bounding box:  xmin: 731000 ymin: 4713000 xmax: 733000 ymax: 4714000
@@ -155,4 +155,32 @@ ctg
     points      : 35.06 million points
     density     : 17.5 points/m²
     density     : 6.7 pulses/m²
-    num. files  : 8 
+    num. files  : 1 
+
+## Create convex hulls around each segmented tree
+
+Needs some cleaning up
+
+``` r
+ctg <- lidR::readLAScatalog(
+  fs::path(output_dir, "clouds")
+)
+lidR::opt_chunk_size(ctg) <- 50000
+```
+
+``` r
+library(lidR)
+# las <- lidR::readLAS(ctg[1,])
+cm_las <- lidR::crown_metrics(ctg, func = .stdtreemetrics, attribute = "IDwater", geom = "concave") |> 
+  dplyr::filter(convhull_area < 400) |> 
+  sf::st_make_valid()
+```
+
+``` r
+# removed all trees that are greater than 400 square meters in area
+# because those ones usually have really weird hulls
+```
+
+``` r
+sf::st_write(cm_las, fs::path(output_dir, "hulls.fgb"), append = FALSE)
+```

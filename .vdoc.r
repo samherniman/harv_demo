@@ -1,28 +1,28 @@
----
-title: "README"
-format: 
-  gfm: default
-  html: default
-  ipynb: default
----
-
-## Tree detection and segmentation at Harvard Forest
-
-The following includes downloading and preprocessing steps as well as the tree detection and segmentation.
-
-## Setup
-
-Install packages
-
-```{r}
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #| eval: false
 install.packages(c("pak", "neonOS", "neonUtilities", "here"))
 pak::pak("samherniman/easytrees")
-```
-
-Setup parallel processing and the output directory
-
-```{r}
+#
+#
+#
+#
+#
 #| warning: false
 #| error: false
 future::plan(future::multisession, workers = 8L)
@@ -30,11 +30,11 @@ lidR::set_lidr_threads(4)
 lasR::set_parallel_strategy(lasR::nested(2, 4L))
 
 output_dir <- here::here("data/derivative")
-```
-
-This downloads two tiles of the Harvard Forest NEON ALS
-
-```{r}
+#
+#
+#
+#
+#
 #| eval: false
 
 neonUtilities::byTileAOP(
@@ -46,19 +46,19 @@ neonUtilities::byTileAOP(
   buffer = 200,
   savepath = here::here("data/raw/las/harv")
 )
-```
-
-Read in the ALS point clouds
-
-```{r}
+#
+#
+#
+#
+#
 ctg <- lidR::readLAScatalog(here::here("data/raw/las/harv"), recursive = TRUE)
 # plot(ctg, mapview = TRUE)
 ctg
-```
-
-Excecute the preprocessing pipeline. This pipeline classifies ground points and normalizes the point clouds, it then creates a DTM (which is not used), and pitfilled CHM.  
-
-```{r}
+#
+#
+#
+#
+#
 #| output: false
 #| warning: false
 #| error: false
@@ -67,13 +67,13 @@ pipeline <-
   easytrees::create_pipeline()
 
 ans = lasR::exec(pipeline, on = ctg)
-```
-
-## Tree detection
-
-Read in the normalized point clouds, CHM, and create a function for tree detection
-
-```{r}
+#
+#
+#
+#
+#
+#
+#
 #| output: false
 #| warning: false
 #| error: false
@@ -90,62 +90,59 @@ f <- function(x) {
   return(y)
 }
 lidR::opt_chunk_size(ctg) <- 5000
-```
-
-```{r}
+#
+#
+#
 ctg
-```
-
-
-Carry out tree detection
-
-```{r}
+#
+#
+#
+#
+#
+#
 #| output: false
 #| warning: false
 #| error: false
 ttops <- lidR::locate_trees(ctg, lidR::lmf(f), uniqueness = "bitmerge")
 ttops$treeID <- 1:nrow(ttops)
 sf::st_write(ttops, fs::path(output_dir, "treetops", "treetops.fgb"), append = FALSE)
-```
-
-```{r}
+#
+#
+#
 ttops
-```
-
-
-Create the segmentation algorithm and run it
-
-```{r}
+#
+#
+#
+#
+#
+#
 #| output: false
 #| warning: false
 #| error: false
-#| eval: true
+#| eval: false
 algo3 <- lidR::watershed(chm, th_tree = 2, tol = 1, ext = 1)
 lidR::opt_laz_compression(ctg) <- TRUE
 lidR::opt_output_files(ctg) <- paste0(output_dir, "/clouds/water_{XCENTER}_{YCENTER}_d")
 ctg <- lidR::segment_trees(ctg, algo3, attribute = "IDwater")
-```
-
-```{r}
+#
+#
+#
 ctg
-```
-
-## Create convex hulls around each segmented tree
-
-Needs some cleaning up
-
-```{r}
+#
+#
+#
+#
+#
+#
+#
 ctg <- lidR::readLAScatalog(
   fs::path(output_dir, "clouds")
 )
 lidR::opt_chunk_size(ctg) <- 50000
 
-```
-
-```{r}
-#| output: false
-#| warning: false
-#| error: false
+#
+#
+#
 library(lidR)
 # las <- lidR::readLAS(ctg[1,])
 cm_las <- lidR::crown_metrics(ctg, func = .stdtreemetrics, attribute = "IDwater", geom = "concave") |> 
@@ -153,11 +150,22 @@ cm_las <- lidR::crown_metrics(ctg, func = .stdtreemetrics, attribute = "IDwater"
   sf::st_make_valid()
 # removed all trees that are greater than 400 square meters in area
 # because those ones usually have really weird hulls
-```
-
-```{r}
-#| output: false
-#| warning: false
-#| error: false
+#
+#
+#
 sf::st_write(cm_las, fs::path(output_dir, "hulls.fgb"), append = FALSE)
-```
+#
+#
+#
+#
+mapview::mapview(cm_las)
+plot(
+  cm_las,
+  #  "IDwater", 
+   col = pastel.colors(200),
+   xlim = c(731001, 731500),
+   ylim = c(4713000, 4713500)
+   )
+#
+#
+#
