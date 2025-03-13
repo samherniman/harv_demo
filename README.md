@@ -97,9 +97,9 @@ ctg
     extent      : 731000, 733000, 4713000, 4714000 (xmin, xmax, ymin, ymax)
     coord. ref. : WGS 84 / UTM zone 18N 
     area        : 2 km²
-    points      : 35.06 million points
-    density     : 17.5 points/m²
-    density     : 6.7 pulses/m²
+    points      : 39.4 million points
+    density     : 19.7 points/m²
+    density     : 7.3 pulses/m²
     num. files  : 1 
 
 Carry out tree detection
@@ -117,7 +117,7 @@ sf::st_write(ttops, fs::path(output_dir, "treetops", "treetops.fgb"), append = F
 ttops
 ```
 
-    Simple feature collection with 43169 features and 2 fields
+    Simple feature collection with 43139 features and 2 fields
     Geometry type: POINT
     Dimension:     XY
     Bounding box:  xmin: 731000 ymin: 4713000 xmax: 733000 ymax: 4714000
@@ -125,15 +125,15 @@ ttops
     First 10 features:
        treeID     Z                 geometry
     1       1 17.90 POINT (731478.3 4713500)
-    2       2 15.62 POINT (731497.2 4713498)
+    2       2 15.49 POINT (731497.2 4713498)
     3       3 15.93   POINT (731462 4713498)
-    4       4 20.60 POINT (731421.2 4713499)
+    4       4 20.49 POINT (731421.2 4713499)
     5       5 18.72 POINT (731487.8 4713496)
     6       6 17.41 POINT (731473.7 4713496)
-    7       7 17.67 POINT (731492.8 4713495)
+    7       7 17.73 POINT (731492.8 4713495)
     8       8 20.23   POINT (731401 4713498)
-    9       9 17.96 POINT (731454.7 4713496)
-    10     10 19.12 POINT (731420.1 4713496)
+    9       9 20.44 POINT (731435.2 4713496)
+    10     10 18.04 POINT (731454.7 4713496)
 
 Create the segmentation algorithm and run it
 
@@ -152,9 +152,9 @@ ctg
     extent      : 731000, 733000, 4713000, 4714000 (xmin, xmax, ymin, ymax)
     coord. ref. : WGS 84 / UTM zone 18N 
     area        : 2 km²
-    points      : 35.06 million points
-    density     : 17.5 points/m²
-    density     : 6.7 pulses/m²
+    points      : 39.4 million points
+    density     : 19.7 points/m²
+    density     : 7.3 pulses/m²
     num. files  : 1 
 
 ## Create convex hulls around each segmented tree
