@@ -1,13 +1,29 @@
+
 ---
 title: "Forest analytics"
-format: 
+format:
   closeread-html:
     backgroundcolor: white
     cr-style:
-      narrative-background-color-overlay: white
-      narrative-text-color-overlay: "#e2e2e2"
-      section-background-color: white
+      section-background-color: white  
+      narrative-font-family: sans-serif
+      narrative-text-color-sidebar: "#ffffff"  
+      narrative-background-color-sidebar: "#A9A9A9"  
+      narrative-background-color-overlay: "#7393B3"  
+      narrative-text-color-overlay: "#FFFDD0"  
+      narrative-border-radius: "5px"  
+      narrative-overlay-max-width: "70%"  
+      narrative-outer-margin: "10px"  
+      narrative-font-size: "1.2rem"  
+    cr-section:
+      layout: "overlay-center"
 ---
+
+<!--
+To render this page run the following line in your terminal
+quarto add qmd-lab/closeread
+-->
+
 
 Landowners, foresters and governments can reap huge benefits from modern data-based forest analytics and digitization.
 
@@ -33,21 +49,33 @@ Airborne laser scanning (ALS), also know as airborne lidar, allow us to quickly 
 As a demonstration of the capabilities of our company, we will focus on Harvard Forest in Western Massachusetts @cr-zoomhf
 
 ::: {#cr-zoomhf}
-INSERT ANIMATION OF ZOOMING INTO ROI
+![](graphics/harv_zoom_small.gif)
 :::
 ::::
 
 :::: cr-section
 With analysis of ALS point clouds, we are able to see through the canopy of the trees and visualize the ground @cr-dtm
 
-
-
 ::: {#cr-dtm}
+```{r}
+#| eval: false
 
+library(rayshader)
+elmat <- here::here("data/derivative/dtm/dtm.tif") |> 
+  terra::rast() |> 
+  terra::aggregate(fact = 10, fun = "median") |> 
+  rayshader::raster_to_matrix()
+
+elmat |> 
+  sphere_shade(texture = "desert", zscale = 10) |> 
+  add_shadow(ray_shade(elmat), 0.5) |> 
+  add_water(detect_water(elmat), color = "desert") |> 
+  add_shadow(ambient_shade(elmat), 0) |> 
+  plot_map()
+```
 
 ![](graphics/dtm.jpg)
 :::
 
 wghewahie
-
 ::::

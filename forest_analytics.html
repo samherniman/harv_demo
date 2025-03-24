@@ -51,9 +51,16 @@ ul.task-list li input[type="checkbox"] {
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-section-background-color: white;
---cr-narrative-text-color-overlay: #e2e2e2;
---cr-narrative-background-color-overlay: white;
+          --cr-narrative-background-color-sidebar: #A9A9A9;
+--cr-narrative-text-color-sidebar: #ffffff;
+--cr-narrative-background-color-overlay: #7393B3;
+--cr-narrative-overlay-max-width: 70%;
+--cr-narrative-font-size: 1.2rem;
+--cr-narrative-font-family: sans-serif;
+--cr-narrative-text-color-overlay: #FFFDD0;
+--cr-narrative-border-radius: 5px;
+--cr-section-background-color: white;
+--cr-narrative-outer-margin: 10px;
         }
       </style>
     
@@ -77,9 +84,13 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<!--
+To render this page run the following line in your terminal
+quarto add qmd-lab/closeread
+-->
 <p>Landowners, foresters and governments can reap huge benefits from modern data-based forest analytics and digitization.</p>
 <p>The should act as a walk though of some of the many insights that are possible from from remote sensing technologies in the forestry sector.</p>
-<div class="cr-section cr-column-screen sidebar-left">
+<div class="cr-section cr-column-screen overlay-center">
 <div class="narrative-col">
 <div class="trigger new-trigger" data-focus-on="cr-rs">
 <div class="narrative">
@@ -108,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div class="cr-section cr-column-screen sidebar-left">
+<div class="cr-section cr-column-screen overlay-center">
 <div class="narrative-col">
 <div class="trigger new-trigger" data-focus-on="cr-zoomhf">
 <div class="narrative">
@@ -119,12 +130,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="sticky-col">
 <div class="sticky-col-stack">
 <div id="cr-zoomhf" class="sticky">
-<p>INSERT ANIMATION OF ZOOMING INTO ROI</p>
+<p><img src="graphics/harv_zoom_small.gif" class="img-fluid"></p>
 </div>
 </div>
 </div>
 </div>
-<div class="cr-section cr-column-screen sidebar-left">
+<div class="cr-section cr-column-screen overlay-center">
 <div class="narrative-col">
 <div class="trigger new-trigger" data-focus-on="cr-dtm">
 <div class="narrative">

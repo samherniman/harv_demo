@@ -190,17 +190,18 @@ plot(baba_ras$understory)
 ## rayshader
 
 ```{r}
-elmat <- here::here("data/derivative/dtm/dtm.tif") |> 
-  raster::raster() |> 
-  rayshader::raster_to_matrix()
 library(rayshader)
-```
+elmat <- here::here("data/derivative/dtm/dtm.tif") |> 
+  terra::rast() |> 
+  terra::aggregate(fact = 10, fun = "median") |> 
+  rayshader::raster_to_matrix()
 
-```{r}
 elmat |> 
-  sphere_shade(texture = "desert") |> 
+  sphere_shade(texture = "desert", zscale = 10) |> 
   add_shadow(ray_shade(elmat), 0.5) |> 
-   plot_map()
+  add_water(detect_water(elmat), color = "desert") |> 
+  add_shadow(ambient_shade(elmat), 0) |> 
+  plot_map()
 ```
 
 ```{r}
@@ -208,7 +209,7 @@ library(terra)
 dtm <- here::here("data/derivative/dtm/dtm.tif") |> terra::rast()
 dtm_prod <- terra::terrain(dtm, v = c("slope", "aspect"), unit = "radians")
 dtm_hillshade <- terra::shade(slope = dtm_prod$slope, aspect = dtm_prod$aspect)
-
+lidR::plot_dtm3d(dtm)
 plot(dtm_hillshade, col =gray(0:30/30), legend = FALSE)
 ```
 
