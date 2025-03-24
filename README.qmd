@@ -55,7 +55,7 @@ Read in the ALS point clouds
 ```{r}
 ctg <- lidR::readLAScatalog(here::here("data/raw/las/harv"), recursive = TRUE)
 # plot(ctg, mapview = TRUE)
-ctg
+ctg <- ctg[1,]
 ```
 
 Excecute the preprocessing pipeline. This pipeline classifies ground points and normalizes the point clouds, it then creates a DTM (which is not used), and pitfilled CHM.  
@@ -185,4 +185,31 @@ plot(baba_ras$z_above10)
 baba_ras$understory <- 100 - baba_ras$z_above3
 plot(baba_ras$understory)
 ```
+
+
+## rayshader
+
+```{r}
+elmat <- here::here("data/derivative/dtm/dtm.tif") |> 
+  raster::raster() |> 
+  rayshader::raster_to_matrix()
+library(rayshader)
+```
+
+```{r}
+elmat |> 
+  sphere_shade(texture = "desert") |> 
+  add_shadow(ray_shade(elmat), 0.5) |> 
+   plot_map()
+```
+
+```{r}
+library(terra)
+dtm <- here::here("data/derivative/dtm/dtm.tif") |> terra::rast()
+dtm_prod <- terra::terrain(dtm, v = c("slope", "aspect"), unit = "radians")
+dtm_hillshade <- terra::shade(slope = dtm_prod$slope, aspect = dtm_prod$aspect)
+
+plot(dtm_hillshade, col =gray(0:30/30), legend = FALSE)
+```
+
 

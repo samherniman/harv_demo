@@ -13,7 +13,7 @@ Landowners, foresters and governments can reap huge benefits from modern data-ba
 
 The should act as a walk though of some of the many insights that are possible from from remote sensing technologies in the forestry sector.
 
-:::: cr-section
+::::: cr-section
 Remote sensing techniques enable the collection of habitat and structural data from an environment without needing to send fieldworkers to conduct in-situ field campaigns. @cr-rs
 
 This allows methods to have more standardization over space and time, cover wider areas, and are often more economically efficient.
@@ -27,17 +27,27 @@ Airborne laser scanning (ALS), also know as airborne lidar, allow us to quickly 
 ::: {#cr-als}
 ![](https://cherishproject.eu/wp-content/uploads/activities/als/activities_als_ilustration.jpg)
 :::
-::::
+:::::
 
 :::: cr-section
-
 As a demonstration of the capabilities of our company, we will focus on Harvard Forest in Western Massachusetts @cr-zoomhf
-
-
 
 ::: {#cr-zoomhf}
 INSERT ANIMATION OF ZOOMING INTO ROI
 :::
 ::::
 
+:::: cr-section
+With analysis of ALS point clouds, we are able to see through the canopy of the trees and visualize the ground @cr-dtm
 
+
+
+::: {#cr-dtm}
+
+
+![](graphics/dtm.jpg)
+:::
+
+wghewahie
+
+::::
