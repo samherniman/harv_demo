@@ -25,10 +25,12 @@ Setup parallel processing and the output directory
 ```{r}
 #| warning: false
 #| error: false
+#| eval: false
 future::plan(future::multisession, workers = 8L)
 lidR::set_lidr_threads(4)
 lasR::set_parallel_strategy(lasR::nested(2, 4L))
-
+```
+```{r}
 output_dir <- here::here("data/derivative")
 ```
 
@@ -161,3 +163,26 @@ cm_las <- lidR::crown_metrics(ctg, func = .stdtreemetrics, attribute = "IDwater"
 #| error: false
 sf::st_write(cm_las, fs::path(output_dir, "hulls.fgb"), append = FALSE)
 ```
+
+## Visualize
+
+```{r}
+#| warning: false
+#| error: false
+baba_ras <- here::here("data/derivative/baba/baba.tif") |> 
+# baba_ras <- here::here("data/derivative/chm/chm.tif") |> 
+
+  terra::rast()
+```
+
+```{r}
+#| warning: false
+#| error: false
+#| eval: false
+library(terra)
+plot(baba_ras$z_p95)
+plot(baba_ras$z_above10)
+baba_ras$understory <- 100 - baba_ras$z_above3
+plot(baba_ras$understory)
+```
+

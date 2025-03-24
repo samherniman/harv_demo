@@ -21,7 +21,9 @@ Setup parallel processing and the output directory
 future::plan(future::multisession, workers = 8L)
 lidR::set_lidr_threads(4)
 lasR::set_parallel_strategy(lasR::nested(2, 4L))
+```
 
+``` r
 output_dir <- here::here("data/derivative")
 ```
 
@@ -184,3 +186,32 @@ cm_las <- lidR::crown_metrics(ctg, func = .stdtreemetrics, attribute = "IDwater"
 ``` r
 sf::st_write(cm_las, fs::path(output_dir, "hulls.fgb"), append = FALSE)
 ```
+
+## Visualize
+
+``` r
+baba_ras <- here::here("data/derivative/baba/baba.tif") |> 
+# baba_ras <- here::here("data/derivative/chm/chm.tif") |> 
+
+  terra::rast()
+```
+
+``` r
+library(terra)
+plot(baba_ras$z_p95)
+```
+
+![](readme_files/figure-commonmark/unnamed-chunk-17-1.png)
+
+``` r
+plot(baba_ras$z_above10)
+```
+
+![](readme_files/figure-commonmark/unnamed-chunk-17-2.png)
+
+``` r
+baba_ras$understory <- 100 - baba_ras$z_above3
+plot(baba_ras$understory)
+```
+
+![](readme_files/figure-commonmark/unnamed-chunk-17-3.png)

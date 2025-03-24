@@ -42,3 +42,5 @@ data/
 # pixi environments
 .pixi
 *.egg-info
+
+/.quarto/
